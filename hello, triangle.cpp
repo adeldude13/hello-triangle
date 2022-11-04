@@ -16,6 +16,10 @@ void errors_callback(int err, const char* desc)
 	std::cout << "Error: \n" << desc;
 }
 
+void resize_callback(GLFWwindow *window, int width, int height) {
+	glViewport(0, 0, width, height);
+}
+
 char *vertexShaderSource = 
 "#version 300 core\n"
 "layout (location = 0) in vec3 aPos;\n"
@@ -43,7 +47,7 @@ int main() {
 	glfwMakeContextCurrent(window);
 	glfwSetErrorCallback(errors_callback);
 	glfwSetKeyCallback(window, key_callback);
-
+	glfwSetWindowSizeCallback(window, resize_callback);
 	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		std::cout << "Failed to Init Glad" << std::endl;
 		return 1;
